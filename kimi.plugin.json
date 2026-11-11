@@ -1,0 +1,29 @@
+{
+  "$schema": "https://kimi.com/schemas/kimi.plugin.schema.json",
+  "name": "ralph-loop",
+  "version": "1.0.0",
+  "description": "Run iterative, self-referential development loops (the Ralph Wiggum technique) in a single Kimi Code session: keep working the same prompt, PRD, or checklist, run the checks until they pass, and self-restart iterations until a completion promise is genuinely true or the iteration limit is hit.",
+  "keywords": [
+    "ralph",
+    "ralph-loop",
+    "ralph wiggum",
+    "iteration",
+    "loop",
+    "self-correction",
+    "checklist",
+    "prd",
+    "autonomous",
+    "agent loop"
+  ],
+  "author": "Anthropic (ported to Kimi Code by mnshkv)",
+  "license": "Apache-2.0; port © mnshkv",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Ralph Loop",
+    "shortDescription": "Keep iterating on a task until all checks pass — self-referential agent loops inside one session",
+    "longDescription": "Implements the Ralph Wiggum technique for iterative, self-referential AI development, ported from Anthropic's Claude Code plugin. You give the agent a task (a plain prompt, a PRD, or a checklist) plus an optional iteration limit and a completion promise; the agent then works in a loop inside the current session: each iteration picks the next incomplete item, runs the project's checks (tests, linters, builds) until they are green, and immediately starts the next iteration with the same prompt. The loop ends only when the completion promise is genuinely true or the iteration limit is reached.\n\nIn the original Claude Code plugin the loop is enforced by a Stop hook that blocks session exit. Kimi Code has no Stop hooks, so the loop discipline lives in the ralph-loop skill itself: the agent re-reads its state file (.kimi/ralph-loop.local.md), continues iterating without waiting for you, and must never fake the completion promise to escape. A setup script (scripts/setup-ralph-loop.sh) creates the state file and works with any bash shell, no Claude CLI required.\n\nIncludes ralph-loop (run the loop), ralph-help (explain the technique and commands), and cancel-ralph (stop an active loop).",
+    "developerName": "Anthropic / mnshkv",
+    "hostKind": "local"
+  },
+  "platforms": ["macos", "windows", "linux"]
+}
